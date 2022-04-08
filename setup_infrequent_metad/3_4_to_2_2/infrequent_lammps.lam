@@ -1,0 +1,130 @@
+###
+# Reference paper:
+# K. Kremer and G. S. Grest
+# Dynamics of entangled linear polymer melts: A molecular-dynamics simulation
+# J Chem Phys 92, 5057 (1990)
+###
+
+###
+# Box and units  (use LJ units and periodic boundaries)
+###
+
+
+units lj
+
+#atom_style bond #no stiffness
+atom_style molecular #with stiffness
+
+boundary        p p p
+
+###
+# Pair interactions require lists of neighbours to be calculated
+###
+neighbor 2.2 bin
+neigh_modify every 1 delay 1 check yes
+
+### Generate RESTART file, SPECIAL format, not a .txt file ###
+### Useful if simulation crashes ###
+restart 10000000 production.restart
+#############################
+
+
+
+
+### READ "REstart" data file ###
+
+#read binary restart files
+#read_restart minim.restart.100000
+
+#read ASCII restart files
+read_data 3_4.data
+
+
+######################
+
+### reset timestep ###
+reset_timestep 0
+######################
+
+###
+# Define groups (atom type 1 is group 'all')
+###
+group all type 1 2
+group banana type  2
+group  patchy type  1
+
+
+velocity all create 1. _INSERT_
+
+
+
+###
+# Dump configs + box coords
+###
+
+dump   1   all   custom   10000   production.lammpstrj   id  type x y z  ix iy iz
+
+
+#dump   id   all   custom   1000000   production.lammpstrj  id  type x y z  ix iy iz
+#dump   2   all   xtc   1000   production.xtc 
+
+
+###################################################################
+# Pair interaction between non-bonded atoms
+#
+#  Lennard-Jones 12-6 potential with cutoff:
+#  potential E=4epsilon[ (sigma/r)^12 - (sigma/r)^6]  for r<r_cut
+#
+#  1.12246 = 2^(1/6) is the minimum of the potential
+
+pair_style hybrid lj/cut 1.12246152962189 gauss 1.12
+
+
+#
+#  pair_modify shift yes adds a constant to the potential such
+#  that E(r_cut)=0. Forces remains unchanged.
+#
+
+pair_modify     shift yes
+
+#
+#  pair_coeff for lj/cut, specify 4:
+#    * atom type interacting with
+#    * atom type
+#    * epsilon (energy units)
+#    * sigma (distance units)
+#
+
+pair_coeff      2 2 lj/cut 150.0 1.0
+pair_coeff      1 2 lj/cut 0.0 1.0
+pair_coeff      1 1 gauss 25.0 50
+
+###################################################################
+
+
+###
+# Set up fixes
+###
+
+neigh_modify exclude molecule/intra all
+fix 1 all  rigid molecule langevin   1.0 1.0   1.0   571   ###Langevin integrator Tstart Tstop 1/friction rndseed
+### PLUMED 
+fix 2 all plumed plumedfile plumed.dat outfile p.log
+
+##### Sample thermodynamic info  (temperature, energy, pressure, etc.) #####
+thermo 100000
+thermo_style   custom   step  temp  epair  emol  press pxx pyy pzz  vol
+############################################################################
+
+
+
+###
+# set timestep of integrator
+###
+timestep 0.012 #0.012
+
+###
+# run integration for a number of steps
+###
+
+run 200000000

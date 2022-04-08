@@ -1,0 +1,23 @@
+UNITS NATURAL
+all_monomers: READ FILE=all_data.dat VALUES=all_monomers IGNORE_FORCES IGNORE_TIME
+single_monomers: READ FILE=all_data.dat VALUES=single_monomers IGNORE_FORCES IGNORE_TIME
+det2: READ FILE=all_data.dat VALUES=det2 IGNORE_FORCES IGNORE_TIME
+metad: READ FILE=all_data.dat VALUES=metad.* IGNORE_FORCES IGNORE_TIME
+
+weights: REWEIGHT_METAD TEMP=1 ARG=metad.rbias
+
+HISTOGRAM ...
+  ARG=single_monomers,all_monomers,det2
+  GRID_MIN=0.,0.,0.
+  GRID_MAX=6.,9.,1.
+  GRID_BIN=3,9,2
+  KERNEL=DISCRETE
+  LOGWEIGHTS=weights
+  LABEL=hD
+... HISTOGRAM
+
+ff: CONVERT_TO_FES GRID=hD TEMP=1.
+DUMPGRID GRID=ff FILE=rew_fes.dat
+DUMPGRID GRID=ff FILE=rew_fes_hist.dat STRIDE=200000
+
+ENDPLUMED

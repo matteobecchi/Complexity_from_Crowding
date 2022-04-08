@@ -1,0 +1,401 @@
+###
+# Reference paper:
+# K. Kremer and G. S. Grest
+# Dynamics of entangled linear polymer melts: A molecular-dynamics simulation
+# J Chem Phys 92, 5057 (1990)
+###
+
+###
+# Box and units  (use LJ units and periodic boundaries)
+###
+
+
+units lj
+
+atom_style molecular #with stiffness
+
+boundary        p p p
+
+###
+# Pair interactions require lists of neighbours to be calculated
+###
+neighbor 2.2 nsq
+neigh_modify every 1 delay 1 check yes
+
+### Generate RESTART file, SPECIAL format, not a .txt file ###
+### Useful if simulation crashes ###
+restart 10000000 production.restart
+#############################
+
+### READ "REstart" data file ###
+
+#read ASCII 
+read_data starting_box.input 
+
+
+######################
+### reset timestep ###
+reset_timestep 0
+######################
+
+###
+# Define groups (atom type 1 is group 'all')
+###
+group all type 1 2
+group banana type  2
+group  patchy type  1
+
+
+# create different velocities for every replica
+partition yes  1 velocity all create 1.  1   
+partition yes  2 velocity all create 1.  2   
+partition yes  3 velocity all create 1.  3   
+partition yes  4 velocity all create 1.  4   
+partition yes  5 velocity all create 1.  5   
+partition yes  6 velocity all create 1.  6   
+partition yes  7 velocity all create 1.  7   
+partition yes  8 velocity all create 1.  8   
+partition yes  9 velocity all create 1.  9   
+partition yes 10 velocity all create 1. 10   
+partition yes 11 velocity all create 1. 11   
+partition yes 12 velocity all create 1. 12   
+partition yes 13 velocity all create 1. 13   
+partition yes 14 velocity all create 1. 14   
+partition yes 15 velocity all create 1. 15   
+partition yes 16 velocity all create 1. 16   
+partition yes 17 velocity all create 1. 17   
+partition yes 18 velocity all create 1. 18   
+partition yes 19 velocity all create 1. 19   
+partition yes 20 velocity all create 1. 20   
+partition yes 21 velocity all create 1. 21   
+partition yes 22 velocity all create 1. 22   
+partition yes 23 velocity all create 1. 23   
+partition yes 24 velocity all create 1. 24   
+partition yes 25 velocity all create 1. 25   
+partition yes 26 velocity all create 1. 26   
+partition yes 27 velocity all create 1. 27   
+partition yes 28 velocity all create 1. 28   
+partition yes 29 velocity all create 1. 29   
+partition yes 30 velocity all create 1. 30   
+partition yes 31 velocity all create 1. 31   
+partition yes 32 velocity all create 1. 32   
+partition yes 33 velocity all create 1. 33   
+partition yes 34 velocity all create 1. 34   
+partition yes 35 velocity all create 1. 35   
+partition yes 36 velocity all create 1. 36   
+partition yes 37 velocity all create 1. 37   
+partition yes 38 velocity all create 1. 38   
+partition yes 39 velocity all create 1. 39   
+partition yes 40 velocity all create 1. 40   
+partition yes 41 velocity all create 1. 41   
+partition yes 42 velocity all create 1. 42   
+partition yes 43 velocity all create 1. 43   
+partition yes 44 velocity all create 1. 44   
+partition yes 45 velocity all create 1. 45   
+partition yes 46 velocity all create 1. 46   
+partition yes 47 velocity all create 1. 47   
+partition yes 48 velocity all create 1. 48   
+partition yes 49 velocity all create 1. 49   
+partition yes 50 velocity all create 1. 50   
+partition yes 51 velocity all create 1. 51   
+partition yes 52 velocity all create 1. 52   
+partition yes 53 velocity all create 1. 53   
+partition yes 54 velocity all create 1. 54   
+partition yes 55 velocity all create 1. 55   
+partition yes 56 velocity all create 1. 56   
+partition yes 57 velocity all create 1. 57   
+partition yes 58 velocity all create 1. 58   
+partition yes 59 velocity all create 1. 59   
+partition yes 60 velocity all create 1. 60   
+partition yes 61 velocity all create 1. 61   
+partition yes 62 velocity all create 1. 62   
+partition yes 63 velocity all create 1. 63   
+partition yes 64 velocity all create 1. 64   
+partition yes 65 velocity all create 1. 65   
+partition yes 66 velocity all create 1. 66   
+partition yes 67 velocity all create 1. 67   
+partition yes 68 velocity all create 1. 68   
+partition yes 69 velocity all create 1. 69   
+partition yes 70 velocity all create 1. 70   
+partition yes 71 velocity all create 1. 71   
+partition yes 72 velocity all create 1. 72   
+partition yes 73 velocity all create 1. 73   
+partition yes 74 velocity all create 1. 74   
+partition yes 75 velocity all create 1. 75   
+partition yes 76 velocity all create 1. 76   
+partition yes 77 velocity all create 1. 77   
+partition yes 78 velocity all create 1. 78   
+partition yes 79 velocity all create 1. 79   
+partition yes 80 velocity all create 1. 80   
+partition yes 81 velocity all create 1. 81   
+partition yes 82 velocity all create 1. 82   
+partition yes 83 velocity all create 1. 83   
+partition yes 84 velocity all create 1. 84   
+partition yes 85 velocity all create 1. 85   
+partition yes 86 velocity all create 1. 86   
+partition yes 87 velocity all create 1. 87   
+partition yes 88 velocity all create 1. 88   
+partition yes 89 velocity all create 1. 89   
+partition yes 90 velocity all create 1. 90   
+partition yes 91 velocity all create 1. 91   
+partition yes 92 velocity all create 1. 92   
+partition yes 93 velocity all create 1. 93   
+partition yes 94 velocity all create 1. 94   
+partition yes 95 velocity all create 1. 95   
+partition yes 96 velocity all create 1. 96   
+
+###
+# Dump configs + box coords
+###
+
+partition yes  1 dump   1   all   custom   1000000   production.0.lammpstrj   id  type x y z  ix iy iz
+partition yes  2 dump   1   all   custom   1000000   production.1.lammpstrj   id  type x y z  ix iy iz
+partition yes  3 dump   1   all   custom   1000000   production.2.lammpstrj   id  type x y z  ix iy iz
+partition yes  4 dump   1   all   custom   1000000   production.3.lammpstrj   id  type x y z  ix iy iz
+partition yes  5 dump   1   all   custom   1000000   production.4.lammpstrj   id  type x y z  ix iy iz
+partition yes  6 dump   1   all   custom   1000000   production.5.lammpstrj   id  type x y z  ix iy iz
+partition yes  7 dump   1   all   custom   1000000   production.6.lammpstrj   id  type x y z  ix iy iz
+partition yes  8 dump   1   all   custom   1000000   production.7.lammpstrj   id  type x y z  ix iy iz
+partition yes  9 dump   1   all   custom   1000000   production.8.lammpstrj   id  type x y z  ix iy iz
+partition yes 10 dump   1   all   custom   1000000   production.9.lammpstrj   id  type x y z  ix iy iz
+partition yes 11 dump   1   all   custom   1000000   production.10.lammpstrj  id  type x y z  ix iy iz
+partition yes 12 dump   1   all   custom   1000000   production.11.lammpstrj  id  type x y z  ix iy iz
+partition yes 13 dump   1   all   custom   1000000   production.12.lammpstrj  id  type x y z  ix iy iz
+partition yes 14 dump   1   all   custom   1000000   production.13.lammpstrj  id  type x y z  ix iy iz
+partition yes 15 dump   1   all   custom   1000000   production.14.lammpstrj  id  type x y z  ix iy iz
+partition yes 16 dump   1   all   custom   1000000   production.15.lammpstrj  id  type x y z  ix iy iz
+partition yes 17 dump   1   all   custom   1000000   production.16.lammpstrj  id  type x y z  ix iy iz
+partition yes 18 dump   1   all   custom   1000000   production.17.lammpstrj  id  type x y z  ix iy iz
+partition yes 19 dump   1   all   custom   1000000   production.18.lammpstrj  id  type x y z  ix iy iz
+partition yes 20 dump   1   all   custom   1000000   production.19.lammpstrj  id  type x y z  ix iy iz
+partition yes 21 dump   1   all   custom   1000000   production.20.lammpstrj  id  type x y z  ix iy iz
+partition yes 22 dump   1   all   custom   1000000   production.21.lammpstrj  id  type x y z  ix iy iz
+partition yes 23 dump   1   all   custom   1000000   production.22.lammpstrj  id  type x y z  ix iy iz
+partition yes 24 dump   1   all   custom   1000000   production.23.lammpstrj  id  type x y z  ix iy iz
+partition yes 25 dump   1   all   custom   1000000   production.24.lammpstrj  id  type x y z  ix iy iz
+partition yes 26 dump   1   all   custom   1000000   production.25.lammpstrj  id  type x y z  ix iy iz
+partition yes 27 dump   1   all   custom   1000000   production.26.lammpstrj  id  type x y z  ix iy iz
+partition yes 28 dump   1   all   custom   1000000   production.27.lammpstrj  id  type x y z  ix iy iz
+partition yes 29 dump   1   all   custom   1000000   production.28.lammpstrj  id  type x y z  ix iy iz
+partition yes 30 dump   1   all   custom   1000000   production.29.lammpstrj  id  type x y z  ix iy iz
+partition yes 31 dump   1   all   custom   1000000   production.30.lammpstrj  id  type x y z  ix iy iz
+partition yes 32 dump   1   all   custom   1000000   production.31.lammpstrj  id  type x y z  ix iy iz
+partition yes 33 dump   1   all   custom   1000000   production.32.lammpstrj  id  type x y z  ix iy iz
+partition yes 34 dump   1   all   custom   1000000   production.33.lammpstrj  id  type x y z  ix iy iz
+partition yes 35 dump   1   all   custom   1000000   production.34.lammpstrj  id  type x y z  ix iy iz
+partition yes 36 dump   1   all   custom   1000000   production.35.lammpstrj  id  type x y z  ix iy iz
+partition yes 37 dump   1   all   custom   1000000   production.36.lammpstrj  id  type x y z  ix iy iz
+partition yes 38 dump   1   all   custom   1000000   production.37.lammpstrj  id  type x y z  ix iy iz
+partition yes 39 dump   1   all   custom   1000000   production.38.lammpstrj  id  type x y z  ix iy iz
+partition yes 40 dump   1   all   custom   1000000   production.39.lammpstrj  id  type x y z  ix iy iz
+partition yes 41 dump   1   all   custom   1000000   production.40.lammpstrj  id  type x y z  ix iy iz
+partition yes 42 dump   1   all   custom   1000000   production.41.lammpstrj  id  type x y z  ix iy iz
+partition yes 43 dump   1   all   custom   1000000   production.42.lammpstrj  id  type x y z  ix iy iz
+partition yes 44 dump   1   all   custom   1000000   production.43.lammpstrj  id  type x y z  ix iy iz
+partition yes 45 dump   1   all   custom   1000000   production.44.lammpstrj  id  type x y z  ix iy iz
+partition yes 46 dump   1   all   custom   1000000   production.45.lammpstrj  id  type x y z  ix iy iz
+partition yes 47 dump   1   all   custom   1000000   production.46.lammpstrj  id  type x y z  ix iy iz
+partition yes 48 dump   1   all   custom   1000000   production.47.lammpstrj  id  type x y z  ix iy iz
+partition yes 49 dump   1   all   custom   1000000   production.48.lammpstrj  id  type x y z  ix iy iz
+partition yes 50 dump   1   all   custom   1000000   production.49.lammpstrj  id  type x y z  ix iy iz
+partition yes 51 dump   1   all   custom   1000000   production.50.lammpstrj  id  type x y z  ix iy iz
+partition yes 52 dump   1   all   custom   1000000   production.51.lammpstrj  id  type x y z  ix iy iz
+partition yes 53 dump   1   all   custom   1000000   production.52.lammpstrj  id  type x y z  ix iy iz
+partition yes 54 dump   1   all   custom   1000000   production.53.lammpstrj  id  type x y z  ix iy iz
+partition yes 55 dump   1   all   custom   1000000   production.54.lammpstrj  id  type x y z  ix iy iz
+partition yes 56 dump   1   all   custom   1000000   production.55.lammpstrj  id  type x y z  ix iy iz
+partition yes 57 dump   1   all   custom   1000000   production.56.lammpstrj  id  type x y z  ix iy iz
+partition yes 58 dump   1   all   custom   1000000   production.57.lammpstrj  id  type x y z  ix iy iz
+partition yes 59 dump   1   all   custom   1000000   production.58.lammpstrj  id  type x y z  ix iy iz
+partition yes 60 dump   1   all   custom   1000000   production.59.lammpstrj  id  type x y z  ix iy iz
+partition yes 61 dump   1   all   custom   1000000   production.60.lammpstrj  id  type x y z  ix iy iz
+partition yes 62 dump   1   all   custom   1000000   production.61.lammpstrj  id  type x y z  ix iy iz
+partition yes 63 dump   1   all   custom   1000000   production.62.lammpstrj  id  type x y z  ix iy iz
+partition yes 64 dump   1   all   custom   1000000   production.63.lammpstrj  id  type x y z  ix iy iz
+partition yes 65 dump   1   all   custom   1000000   production.64.lammpstrj  id  type x y z  ix iy iz
+partition yes 66 dump   1   all   custom   1000000   production.65.lammpstrj  id  type x y z  ix iy iz
+partition yes 67 dump   1   all   custom   1000000   production.66.lammpstrj  id  type x y z  ix iy iz
+partition yes 68 dump   1   all   custom   1000000   production.67.lammpstrj  id  type x y z  ix iy iz
+partition yes 69 dump   1   all   custom   1000000   production.68.lammpstrj  id  type x y z  ix iy iz
+partition yes 70 dump   1   all   custom   1000000   production.69.lammpstrj  id  type x y z  ix iy iz
+partition yes 71 dump   1   all   custom   1000000   production.70.lammpstrj  id  type x y z  ix iy iz
+partition yes 72 dump   1   all   custom   1000000   production.71.lammpstrj  id  type x y z  ix iy iz
+partition yes 73 dump   1   all   custom   1000000   production.72.lammpstrj  id  type x y z  ix iy iz
+partition yes 74 dump   1   all   custom   1000000   production.73.lammpstrj  id  type x y z  ix iy iz
+partition yes 75 dump   1   all   custom   1000000   production.74.lammpstrj  id  type x y z  ix iy iz
+partition yes 76 dump   1   all   custom   1000000   production.75.lammpstrj  id  type x y z  ix iy iz
+partition yes 77 dump   1   all   custom   1000000   production.76.lammpstrj  id  type x y z  ix iy iz
+partition yes 78 dump   1   all   custom   1000000   production.77.lammpstrj  id  type x y z  ix iy iz
+partition yes 79 dump   1   all   custom   1000000   production.78.lammpstrj  id  type x y z  ix iy iz
+partition yes 80 dump   1   all   custom   1000000   production.79.lammpstrj  id  type x y z  ix iy iz
+partition yes 81 dump   1   all   custom   1000000   production.80.lammpstrj  id  type x y z  ix iy iz
+partition yes 82 dump   1   all   custom   1000000   production.81.lammpstrj  id  type x y z  ix iy iz
+partition yes 83 dump   1   all   custom   1000000   production.82.lammpstrj  id  type x y z  ix iy iz
+partition yes 84 dump   1   all   custom   1000000   production.83.lammpstrj  id  type x y z  ix iy iz
+partition yes 85 dump   1   all   custom   1000000   production.84.lammpstrj  id  type x y z  ix iy iz
+partition yes 86 dump   1   all   custom   1000000   production.85.lammpstrj  id  type x y z  ix iy iz
+partition yes 87 dump   1   all   custom   1000000   production.86.lammpstrj  id  type x y z  ix iy iz
+partition yes 88 dump   1   all   custom   1000000   production.87.lammpstrj  id  type x y z  ix iy iz
+partition yes 89 dump   1   all   custom   1000000   production.88.lammpstrj  id  type x y z  ix iy iz
+partition yes 90 dump   1   all   custom   1000000   production.89.lammpstrj  id  type x y z  ix iy iz
+partition yes 91 dump   1   all   custom   1000000   production.90.lammpstrj  id  type x y z  ix iy iz
+partition yes 92 dump   1   all   custom   1000000   production.91.lammpstrj  id  type x y z  ix iy iz
+partition yes 93 dump   1   all   custom   1000000   production.92.lammpstrj  id  type x y z  ix iy iz
+partition yes 94 dump   1   all   custom   1000000   production.93.lammpstrj  id  type x y z  ix iy iz
+partition yes 95 dump   1   all   custom   1000000   production.94.lammpstrj  id  type x y z  ix iy iz
+partition yes 96 dump   1   all   custom   1000000   production.95.lammpstrj  id  type x y z  ix iy iz
+
+partition yes  1 dump   2   all   dcd      1000000   production.0.dcd 
+partition yes  2 dump   2   all   dcd      1000000   production.1.dcd 
+partition yes  3 dump   2   all   dcd      1000000   production.2.dcd 
+partition yes  4 dump   2   all   dcd      1000000   production.3.dcd 
+partition yes  5 dump   2   all   dcd      1000000   production.4.dcd 
+partition yes  6 dump   2   all   dcd      1000000   production.5.dcd 
+partition yes  7 dump   2   all   dcd      1000000   production.6.dcd 
+partition yes  8 dump   2   all   dcd      1000000   production.7.dcd 
+partition yes  9 dump   2   all   dcd      1000000   production.8.dcd 
+partition yes 10 dump   2   all   dcd      1000000   production.9.dcd 
+partition yes 11 dump   2   all   dcd      1000000   production.10.dcd
+partition yes 12 dump   2   all   dcd      1000000   production.11.dcd
+partition yes 13 dump   2   all   dcd      1000000   production.12.dcd
+partition yes 14 dump   2   all   dcd      1000000   production.13.dcd
+partition yes 15 dump   2   all   dcd      1000000   production.14.dcd
+partition yes 16 dump   2   all   dcd      1000000   production.15.dcd
+partition yes 17 dump   2   all   dcd      1000000   production.16.dcd
+partition yes 18 dump   2   all   dcd      1000000   production.17.dcd
+partition yes 19 dump   2   all   dcd      1000000   production.18.dcd
+partition yes 20 dump   2   all   dcd      1000000   production.19.dcd
+partition yes 21 dump   2   all   dcd      1000000   production.20.dcd
+partition yes 22 dump   2   all   dcd      1000000   production.21.dcd
+partition yes 23 dump   2   all   dcd      1000000   production.22.dcd
+partition yes 24 dump   2   all   dcd      1000000   production.23.dcd
+partition yes 25 dump   2   all   dcd      1000000   production.24.dcd
+partition yes 26 dump   2   all   dcd      1000000   production.25.dcd
+partition yes 27 dump   2   all   dcd      1000000   production.26.dcd
+partition yes 28 dump   2   all   dcd      1000000   production.27.dcd
+partition yes 29 dump   2   all   dcd      1000000   production.28.dcd
+partition yes 30 dump   2   all   dcd      1000000   production.29.dcd
+partition yes 31 dump   2   all   dcd      1000000   production.30.dcd
+partition yes 32 dump   2   all   dcd      1000000   production.31.dcd
+partition yes 33 dump   2   all   dcd      1000000   production.32.dcd
+partition yes 34 dump   2   all   dcd      1000000   production.33.dcd
+partition yes 35 dump   2   all   dcd      1000000   production.34.dcd
+partition yes 36 dump   2   all   dcd      1000000   production.35.dcd
+partition yes 37 dump   2   all   dcd      1000000   production.36.dcd
+partition yes 38 dump   2   all   dcd      1000000   production.37.dcd
+partition yes 39 dump   2   all   dcd      1000000   production.38.dcd
+partition yes 40 dump   2   all   dcd      1000000   production.39.dcd
+partition yes 41 dump   2   all   dcd      1000000   production.40.dcd
+partition yes 42 dump   2   all   dcd      1000000   production.41.dcd
+partition yes 43 dump   2   all   dcd      1000000   production.42.dcd
+partition yes 44 dump   2   all   dcd      1000000   production.43.dcd
+partition yes 45 dump   2   all   dcd      1000000   production.44.dcd
+partition yes 46 dump   2   all   dcd      1000000   production.45.dcd
+partition yes 47 dump   2   all   dcd      1000000   production.46.dcd
+partition yes 48 dump   2   all   dcd      1000000   production.47.dcd
+partition yes 49 dump   2   all   dcd      1000000   production.48.dcd
+partition yes 50 dump   2   all   dcd      1000000   production.49.dcd
+partition yes 51 dump   2   all   dcd      1000000   production.50.dcd
+partition yes 52 dump   2   all   dcd      1000000   production.51.dcd
+partition yes 53 dump   2   all   dcd      1000000   production.52.dcd
+partition yes 54 dump   2   all   dcd      1000000   production.53.dcd
+partition yes 55 dump   2   all   dcd      1000000   production.54.dcd
+partition yes 56 dump   2   all   dcd      1000000   production.55.dcd
+partition yes 57 dump   2   all   dcd      1000000   production.56.dcd
+partition yes 58 dump   2   all   dcd      1000000   production.57.dcd
+partition yes 59 dump   2   all   dcd      1000000   production.58.dcd
+partition yes 60 dump   2   all   dcd      1000000   production.59.dcd
+partition yes 61 dump   2   all   dcd      1000000   production.60.dcd
+partition yes 62 dump   2   all   dcd      1000000   production.61.dcd
+partition yes 63 dump   2   all   dcd      1000000   production.62.dcd
+partition yes 64 dump   2   all   dcd      1000000   production.63.dcd
+partition yes 65 dump   2   all   dcd      1000000   production.64.dcd
+partition yes 66 dump   2   all   dcd      1000000   production.65.dcd
+partition yes 67 dump   2   all   dcd      1000000   production.66.dcd
+partition yes 68 dump   2   all   dcd      1000000   production.67.dcd
+partition yes 69 dump   2   all   dcd      1000000   production.68.dcd
+partition yes 70 dump   2   all   dcd      1000000   production.69.dcd
+partition yes 71 dump   2   all   dcd      1000000   production.70.dcd
+partition yes 72 dump   2   all   dcd      1000000   production.71.dcd
+partition yes 73 dump   2   all   dcd      1000000   production.72.dcd
+partition yes 74 dump   2   all   dcd      1000000   production.73.dcd
+partition yes 75 dump   2   all   dcd      1000000   production.74.dcd
+partition yes 76 dump   2   all   dcd      1000000   production.75.dcd
+partition yes 77 dump   2   all   dcd      1000000   production.76.dcd
+partition yes 78 dump   2   all   dcd      1000000   production.77.dcd
+partition yes 79 dump   2   all   dcd      1000000   production.78.dcd
+partition yes 80 dump   2   all   dcd      1000000   production.79.dcd
+partition yes 81 dump   2   all   dcd      1000000   production.80.dcd
+partition yes 82 dump   2   all   dcd      1000000   production.81.dcd
+partition yes 83 dump   2   all   dcd      1000000   production.82.dcd
+partition yes 84 dump   2   all   dcd      1000000   production.83.dcd
+partition yes 85 dump   2   all   dcd      1000000   production.84.dcd
+partition yes 86 dump   2   all   dcd      1000000   production.85.dcd
+partition yes 87 dump   2   all   dcd      1000000   production.86.dcd
+partition yes 88 dump   2   all   dcd      1000000   production.87.dcd
+partition yes 89 dump   2   all   dcd      1000000   production.88.dcd
+partition yes 90 dump   2   all   dcd      1000000   production.89.dcd
+partition yes 91 dump   2   all   dcd      1000000   production.90.dcd
+partition yes 92 dump   2   all   dcd      1000000   production.91.dcd
+partition yes 93 dump   2   all   dcd      1000000   production.92.dcd
+partition yes 94 dump   2   all   dcd      1000000   production.93.dcd
+partition yes 95 dump   2   all   dcd      1000000   production.94.dcd
+partition yes 96 dump   2   all   dcd      1000000   production.95.dcd
+
+###################################################################
+# Pair interaction between non-bonded atoms
+#
+#  Lennard-Jones 12-6 potential with cutoff:
+#  potential E=4epsilon[ (sigma/r)^12 - (sigma/r)^6]  for r<r_cut
+#
+#  1.12246 = 2^(1/6) is the minimum of the potential
+
+pair_style hybrid lj/cut 1.12246152962189 gauss 1.12
+
+
+#  pair_modify shift yes adds a constant to the potential such
+#  that E(r_cut)=0. Forces remains unchanged.
+
+pair_modify     shift yes
+
+#  pair_coeff for lj/cut, specify 4:
+#    * atom type interacting with
+#    * atom type
+#    * epsilon (energy units)
+#    * sigma (distance units)
+#
+
+pair_coeff      2 2 lj/cut 150.0 1.0
+pair_coeff      1 2 lj/cut 0.0 1.0
+pair_coeff      1 1 gauss 25.0 50
+
+###################################################################
+
+
+###
+# Set up fixes
+###
+
+neigh_modify exclude molecule/intra all
+fix 1 all  rigid molecule langevin   1.0 1.0   1.0   571   ###Langevin integrator Tstart Tstop 1/friction rndseed
+
+comm_style tiled
+### PLUMED 
+fix 2 all plumed plumedfile plumed.dat outfile p.log
+
+
+##### Sample thermodynamic info  (temperature, energy, pressure, etc.) #####
+thermo 100000
+thermo_style   custom   step  temp  epair  emol  press pxx pyy pzz  vol
+############################################################################
+
+
+
+###
+# set timestep of integrator
+###
+timestep 0.012 #0.012
+
+# Simulation run
+
+run 500000000

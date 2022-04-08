@@ -1,0 +1,11 @@
+Every foldere here contains:
+    * the PLUMED input file
+    * the LAMMPS input file (same for every simulation)
+    * the initial configuration
+
+The name of the folder will be $A_$B_to_$C_$D, where the variable means:
+    * $A is the number of the bonds in place in the initial state
+    * $B is the number of open ends in bound monomers in the initial state
+    * $C is the number of the bonds in place in the final state
+    * $D is the number of open ends in bound monomers in the final state
+this way to define the states make them unique in all but in one case: 4_2 can be both a closed ring formed by 3 monomers + a dimer or an open tetramer. To unambiguously discriminate between those we call 4_2_tring the one with the ring and 4_2 the one with the tetramer.

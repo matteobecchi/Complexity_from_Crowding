@@ -1,0 +1,99 @@
+###
+# Reference paper:
+# K. Kremer and G. S. Grest
+# Dynamics of entangled linear polymer melts: A molecular-dynamics simulation
+# J Chem Phys 92, 5057 (1990)
+###
+
+###
+# Box and units  (use LJ units and periodic boundaries)
+###
+
+
+units lj
+
+#atom_style bond #no stiffness
+atom_style molecular #with stiffness
+
+boundary        p p p
+
+###
+# Pair interactions require lists of neighbours to be calculated
+###
+#neighbor 0.3 bin
+neighbor 1.9 bin
+neigh_modify every 1 delay 1 check yes
+comm_modify cutoff 8.0
+
+### Generate RESTART file, SPECIAL format, not a .txt file ###
+### Useful if simulation crashes ###
+restart 100000 minim.restart
+#############################
+
+### READ "start" data file ###
+read_data starting_box.input
+######################
+
+### reset timestep ###
+reset_timestep 0 
+######################
+
+###
+# Define groups (atom type 1 is group 'all')
+###
+group all type 1 2 
+group banana type  2    
+group patchy type  1    
+
+###
+# Dump configs - "simple dumpings"
+###
+
+dump   id   all   custom   10000   minim.lammpstrj  id  type x y z  ix iy iz
+
+###################################################################
+# Pair interaction between non-bonded atoms
+#
+#  soft potential, for PUSHING apart overlapping atoms
+#  potential E=A*(1 + cos(pi*r/r_c))
+#
+#  1.12246 = 2^(1/6) is the cut-off r_c
+
+pair_style     soft 1.12246152962189
+
+#
+#  pair_coeff for soft, specify 3:
+#    * atom type interacting with
+#    * atom type 
+#    * A
+#    
+
+pair_coeff 2 2 100.0 1.12246152962189
+pair_coeff 1 2 0.0 0.224492
+pair_coeff 1 1 0.0 0.673477
+
+
+###################################################################
+
+
+###
+# Set up fixes
+###
+
+#neigh_modify exclude molecule all
+fix 1 all rigid/small molecule langevin 0.1 0.1 1.0 571 ###Langevin integrator Tstart Tstop 1/friction rndseed
+
+##### Sample thermodynamic info  (temperature, energy, pressure, etc.) #####
+thermo 1000
+thermo_style   custom   step  temp  epair  emol  press pxx pyy pzz  vol
+############################################################################
+
+###
+# set timestep of integrator
+###
+timestep 0.001 #0.012
+
+###
+# run integration for a number of steps
+###
+run 100000
