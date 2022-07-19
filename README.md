@@ -1,5 +1,5 @@
-# Complexity_from_Crowding
-Data and code for "Becchi et al., Complexity Emerging from Crowding in a Self-Limited Self-Assembling System"
+# Density_tunable_Pathway_Complexity
+Data and code for "Becchi et al., Density-tunable pathway complexity in a minimalistic self-assembly model"
 
 The "setup" folders contain the starting configurations and the LAMMPS scripts to run the simulations.
 
